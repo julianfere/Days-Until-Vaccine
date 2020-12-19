@@ -12,10 +12,8 @@ currentDT = datetime.datetime.now(tz=tzone)
 
 INI_DATE = date(2020,3,15)
 
-with open(os.path.join(absolute_path,'token.txt'),'r') as t:
-    info = t.readlines()
 keep = gkeepapi.Keep()
-success = keep.login(info[0],info[1])  
+success = keep.login('julianferegotti96@gmail.com','luupsjpfdqzqazml')  
 
 def act_note():
     gnote = keep.find(labels = [keep.findLabel('Days-Until-Vaccine')])
