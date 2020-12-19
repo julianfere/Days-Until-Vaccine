@@ -22,11 +22,12 @@ def act_note():
     for note in gnote:
         nota = note
     act = str(currentDT.day)+'/'+str(currentDT.month)+'/'+str(currentDT.year)
+    nota.title = 'Days Until Vaccine'
     nota.text = f'Inicio: 15/3/2020 \nActual: {act}\nDias: {abs(date(currentDT.year,currentDT.month,currentDT.day)-INI_DATE).days}'
     keep.sync()
     
 
-
+print('\033[92m'+'Days Until Vaccine: Status Online'+'\033[0m')
 act = date.today().day
 while True:
     if act != date.today().day:
