@@ -1,1 +1,1 @@
-worker: python CoronaFree.py
+worker: python duv.py
