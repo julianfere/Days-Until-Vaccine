@@ -13,11 +13,6 @@ currentDT = datetime.datetime.now(tz=tzone)
 INI_DATE = date(2020,3,15)
 
 keep = gkeepapi.Keep()
-# success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs')
-# token = keep.getMasterToken()
-# with open('token.txt','w') as out:
-#     out.write(token)
-# keyring.set_password('google-keep-token', 'julianferegotti96@gmail.com', token)
 with open(os.path.join(absolute_path,'token.txt'),'r') as t:
     token = t.read()
 keep.resume('julianferegotti96@gmail.com', token)
@@ -42,7 +37,8 @@ while True:
         print('Cambio de dia')
         act_note()
         act = date.today().day
-    time.sleep(3600)
+    time.sleep(5)
+    print('No cambio de dia')
 
     
 
