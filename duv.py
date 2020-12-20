@@ -3,6 +3,7 @@ import datetime
 from datetime import date
 import time
 import os
+import uuid
 
 absolute_path = os.path.join(os.path.dirname(__file__))
 
@@ -13,7 +14,7 @@ currentDT = datetime.datetime.now(tz=tzone)
 INI_DATE = date(2020,3,15)
 
 keep = gkeepapi.Keep()
-success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs')  
+success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs',device_id=get_mac())  
 
 def act_note():
     gnote = keep.find(labels = [keep.findLabel('Days-Until-Vaccine')])
