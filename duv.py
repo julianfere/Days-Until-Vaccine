@@ -14,7 +14,26 @@ currentDT = datetime.datetime.now(tz=tzone)
 INI_DATE = date(2020,3,15)
 
 keep = gkeepapi.Keep()
-success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs','ios:92571efe-9588-485d-99c8-a62c977ddfd1')  
+if 'id.txt' not in os.listdir(absolute_path):
+    device = 'ios:' + str(uuid.uuid4())
+    try:
+        success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs',device)
+    except Exception as e:
+        print(e)
+        print('generar otra?')
+        exit()
+    
+    with open('id.txt','w') as out:
+        out.write(device)
+        out.close()
+else:
+    with open('id.txt','r') as inp:
+        device = inp.read()
+
+    success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs',device)
+    
+
+
 
 def act_note():
     gnote = keep.find(labels = [keep.findLabel('Days-Until-Vaccine')])
