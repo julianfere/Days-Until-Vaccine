@@ -13,7 +13,7 @@ currentDT = datetime.datetime.now(tz=tzone)
 INI_DATE = date(2020,3,15)
 
 keep = gkeepapi.Keep()
-success = keep.login('julianferegotti96@gmail.com','luupsjpfdqzqazml')  
+success = keep.resume('julianferegotti96@gmail.com','hicqmjycpjyldnbs')  
 
 def act_note():
     gnote = keep.find(labels = [keep.findLabel('Days-Until-Vaccine')])
