@@ -3,7 +3,6 @@ import datetime
 from datetime import date
 import time
 import os
-import keyring
 
 absolute_path = os.path.join(os.path.dirname(__file__))
 
