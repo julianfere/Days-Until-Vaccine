@@ -13,7 +13,7 @@ currentDT = datetime.datetime.now(tz=tzone)
 INI_DATE = date(2020,3,15)
 
 keep = gkeepapi.Keep()
-success = keep.resume('julianferegotti96@gmail.com','hicqmjycpjyldnbs')  
+success = keep.login('julianferegotti96@gmail.com','hicqmjycpjyldnbs')  
 
 def act_note():
     gnote = keep.find(labels = [keep.findLabel('Days-Until-Vaccine')])
@@ -24,7 +24,7 @@ def act_note():
     nota.text = f'Inicio: 15/3/2020 \nActual: {act}\nDias: {abs(date(currentDT.year,currentDT.month,currentDT.day)-INI_DATE).days}'
     keep.sync()
     
-
+act_note()
 print('\033[92m'+'Days Until Vaccine: Status Online'+'\033[0m')
 act = date.today().day
 while True:
