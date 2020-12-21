@@ -37,7 +37,8 @@ while True:
         print('Cambio de dia')
         act_note()
         act = date.today().day
-    time.sleep(5)
+        print(act)
+    time.sleep(500)
     print('No cambio de dia')
 
     
