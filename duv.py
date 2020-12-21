@@ -33,6 +33,7 @@ act_note()
 print('\033[92m'+'Days Until Vaccine: Status Online'+'\033[0m')
 act = date.today().day
 while True:
+    currentDT = datetime.datetime.now(tz=tzone)
     if act != date.today().day:
         print('Cambio de dia')
         act_note()
