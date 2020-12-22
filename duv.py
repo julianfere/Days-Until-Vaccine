@@ -31,7 +31,7 @@ def act_note():
     
 act_note()
 print('\033[92m'+'Days Until Vaccine: Status Online'+'\033[0m')
-act = date.today().day
+act = datetime.datetime.now(tz=tzone)
 while True:
     currentDT = datetime.datetime.now(tz=tzone)
     if act != date.today().day:
@@ -39,8 +39,8 @@ while True:
         act_note()
         act = date.today().day
         print(act)
-    time.sleep(500)
-    print('No cambio de dia')
+    time.sleep(5)
+    print('No cambio de dia: ',currentDT)
 
     
 
