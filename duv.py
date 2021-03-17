@@ -3,9 +3,9 @@ import datetime
 import os
 import time
 from datetime import date
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
 
 def get_ini_date():
