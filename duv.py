@@ -3,51 +3,67 @@ import datetime
 import os
 import time
 from datetime import date
-#from dotenv import load_dotenv
 
-#load_dotenv()
+class DaysUntilVaccine:
+    OFFSET    = -datetime.timedelta(hours=3)
+    TIME_ZONE = datetime.timezone(offset=OFFSET, name='utc-3')
+    EMAIL     = os.getenv('EMAIL')
+    TOKEN     = os.getenv('TOKEN')
+    KEEP      = gkeepapi.Keep()
 
+    def __init__(self):
+        self.ini_date    = self._get_ini_date()
+        self.actual_date = datetime.datetime.now(tz=self.TIME_ZONE).date()
+        self.KEEP.resume(self.EMAIL, self.TOKEN)
 
-def get_ini_date():
-    ini_date = os.getenv('INI_DATE').split('/')
-    ini_date = list(map(int,ini_date))
-    return date(ini_date[0],ini_date[1],ini_date[2])
+    def update_note(self):
+        note = self.KEEP.find(labels = [self.KEEP.findLabel('Days-Until-Vaccine')]).__next__()
+        act  = self._format_date_string(self.actual_date)
+        ini  = self._format_date_string(self.ini_date)
+        note.title = 'Days Until Vaccine'
+        note.text = f'Inicio: {ini} \nActual: {act}\nDias: {self._calculate_days(self.actual_date)}'
+        self.update_date()
+        self.KEEP.sync()
 
-EMAIL    = os.getenv('EMAIL')
-TOKEN    = os.getenv('TOKEN')
-INI_DATE = get_ini_date()
-
-offset    = -datetime.timedelta(hours=3)
-tzone     = datetime.timezone(offset=offset,name='utc-3')
-currentDT = datetime.datetime.now(tz=tzone)
-
-KEEP = gkeepapi.Keep()
-
-
-KEEP.resume(EMAIL, TOKEN)
-
-def act_note():
-    gnote = KEEP.find(labels = [KEEP.findLabel('Days-Until-Vaccine')])
-    for note in gnote:
-        nota = note
-    act = str(currentDT.day)+'/'+str(currentDT.month)+'/'+str(currentDT.year)
-    nota.title = 'Days Until Vaccine'
-    nota.text = f'Inicio: 15/3/2020 \nActual: {act}\nDias: {abs(date(currentDT.year,currentDT.month,currentDT.day)-INI_DATE).days}'
-    KEEP.sync()
+    def update_date(self):
+        self.actual_date = datetime.datetime.now(tz=self.TIME_ZONE)
     
-act_note()
+    def formated_date(self):
+        return self._format_date_string(self.ini_date)
+
+    # Private
+
+    def _get_ini_date(self):
+        ini_date = os.getenv('INI_DATE').split('/')
+        ini_date = list(map(int,ini_date))
+        return date(ini_date[0],ini_date[1],ini_date[2])
+
+    def _current_day(self):
+        return datetime.datetime.now(tz=self.TIME_ZONE)
+
+    def _format_date_string(self,date):
+        return f'{date.day}/{date.month}/{date.year}'
+    
+    def _calculate_days(self,date):
+        return abs(date.date() - self.ini_date).days
+
+
+DUV = DaysUntilVaccine()
+
 print('\033[92m'+'Days Until Vaccine: Status Online'+'\033[0m')
-act = datetime.datetime.now(tz=tzone).day
+
+DUV.update_date()
+DUV.update_note()
+
+act = datetime.datetime.now(tz=DaysUntilVaccine.TIME_ZONE).day
+
 while True:
-    currentDT = datetime.datetime.now(tz=tzone)
-    if act != currentDT.day:
+    if act != DUV.actual_date.day:
         print('Date changed',act)
-        act_note()
+        DUV.update_note()
         act = date.today().day
     time.sleep(6300)
-    print('Date not changed: ',currentDT.day,currentDT.month,currentDT.year)
+    print(f'Date not changed: {DUV.formated_date}')
 
-    
-
-
+        
 
